@@ -31,20 +31,36 @@ function makeColumns(cellNum) {
     };
 };
 
-//Adds hover over cells
-container.addEventListener("mouseenter", function( event ){
-    event.target.style.color = "purple";
-    setTimeout(function(){
-        event.target.style.color = "";
-    }, 500);
-}, false);
+//Hover over cells plus button changes
+function changeToBlack(){
+    let cell = document.getElementsByClassName('cell');
+    Array.from(cells).forEach(cell =>{
+    cell.addEventListener("mouseover", (e) => {
+        cell.style.backgroundColor = 'black'
+        });
+    });
+}
 
-container.addEventListener("mouseover", function( event ) {   
-    // highlight the mouseover target
-    event.target.style.color = "orange";
-  
-    // reset the color after a short delay
-    setTimeout(function() {
-      event.target.style.color = "";
-    }, 500);
-  }, false);
+function changeToGold(){
+    let cell = document.getElementsByClassName('cell');
+    Array.from(cells).forEach(cell =>{
+    cell.addEventListener("mouseover", (e) => {
+        cell.style.backgroundColor = 'rgb(189, 142, 12)'
+        });
+    });
+}
+
+function changeToRandom(){
+    let cell = document.getElementsByClassName('cell');
+    Array.from(cells).forEach(cell =>{
+    cell.addEventListener("mouseover", (e) => {
+        cell.style.backgroundColor = 'rgb('+Math.floor(Math.random()*256)+','+Math.floor(Math.random()*256)+','+Math.floor(Math.random()*256)+')'
+        });
+    });
+}
+
+function refreshPage(){
+    window.location.reload();
+} 
+createGrid();
+
