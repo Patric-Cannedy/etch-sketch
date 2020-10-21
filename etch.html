@@ -1,76 +1,27 @@
 <html>
 <head>
     <title>Etch a Sketch</title>
-    <style>
+    <link rel="stylesheet" href="etch.css">
 
-.cell {
-  border: 1px solid rgb(180, 180, 180);
-  min-width: 20px;
-  min-height: 20px;
-  display: inline-block;
-  margin-right: 2px;
-  
-}
-
-.color{
-    background-color: black
-}
-
-#container{
-    width: 500px;
-    height: 500px;
-    margin: auto;
-    
-}
-#title{
-    width: 500px;
-    margin: auto;
-    color: rgb(189, 142, 12);
-}
-
-#bottom-row-buttons{ 
-    width: 500px;
-    height: 500px;
-    margin-top: -90px;
-    margin-bottom: auto;
-    margin-left: auto;
-    margin-right: auto;
-    font-size: 16px;
-    background-color:blue
-    border: none;
-    color: black;
-     
-}
-button{
-    background-color: #000000; /* Green */
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px; 
-
-}
-    </style>
 </head>
 <body>
     <div id="title">
         <h1>Pat's Etch-A-Sketch</h1>
             Pick between Black, Gold, or Random
     </div>
-    <div id="container"></div>
+    
+    <div class="container gridBorder" >
+        <div class="boxContainer"></div>
+    </div>
+
     <div id="bottom-row-buttons">
-        <button type="button" id="black" onclick="changeToBlack()">Black</button>
-        <button type="button" id="gold" onclick="changeToGold()">Gold</button>
+        <button type="button" id="black" onclick="setColor('black')">Black</button>
+        <button type="button" id="gold" onclick="setColor('rgb(189, 142, 12)')">Gold</button>
         <button type="button" id="random" onclick="changeToRandom()">Random</button>
         <button type="button" id="reset" onclick="refreshPage()">Reset</button>
     </div>
         
-<script src="etch.js"></script>
-
-
-
+<script type="text/javascript" src="etch.js"></script>
 
 
 </html>

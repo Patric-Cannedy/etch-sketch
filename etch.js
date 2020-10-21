@@ -1,66 +1,66 @@
-const container = document.getElementById("container");
-let rows = document.getElementsByClassName("gridRow");
-let cells = document.getElementsByClassName("cell");
+const boxContainer = document.querySelector(".boxContainer")
+let colorNow = 'black'
+let numberOfRows = 16;
 
+//Grid
 
-defaultGrid();
-//Creates a default grid sized 16x16 
-function defaultGrid() {
-    makeRows(16);
-    makeColumns(16);
+  function createGrid(numberOfRows) {
+    boxContainer.style.setProperty('--grid-rows', numberOfRows);
+    boxContainer.style.setProperty('--grid-cols', numberOfRows);
+    for (let i = 0; i < (numberOfRows ** 2); i++) {
+        let cell = document.createElement('div');
+        cell.setAttribute("class", "cell");
+        cell.setAttribute("id", `${i}`);
+        cell.addEventListener('mouseover', drawColor);
+        boxContainer.appendChild(cell);
+    }
 }
+createGrid(numberOfRows)
 
-//Takes (rows, columns) input and makes a grid
-function makeRows(rowNum) {
-
-    //Creates rows
-    for (r = 0; r < rowNum; r++) {
-        let row = document.createElement("div");
-        container.appendChild(row).className = "gridRow";
-    };
-};
-
-//Creates columns
-function makeColumns(cellNum) {
-    for (i = 0; i < rows.length; i++) {
-        for (j = 0; j < cellNum; j++) {
-            let newCell = document.createElement("div");
-            rows[j].appendChild(newCell).className = "cell";
-        };
-
-    };
-};
 
 //Hover over cells plus button changes
-function changeToBlack(){
-    let cell = document.getElementsByClassName('cell');
-    Array.from(cells).forEach(cell =>{
-    cell.addEventListener("mouseover", (e) => {
-        cell.style.backgroundColor = 'black'
-        });
-    });
-}
-
-function changeToGold(){
-    let cell = document.getElementsByClassName('cell');
-    Array.from(cells).forEach(cell =>{
-    cell.addEventListener("mouseover", (e) => {
-        cell.style.backgroundColor = 'rgb(189, 142, 12)'
-        });
-    });
-}
-
-function changeToRandom(){
-    let cell = document.getElementsByClassName('cell');
-    Array.from(cells).forEach(cell =>{
-    cell.addEventListener("mouseover", (e) => {
-        cell.style.backgroundColor = 'rgb('+Math.floor(Math.random()*256)+','+Math.floor(Math.random()*256)+','+Math.floor(Math.random()*256)+')'
-        });
-    });
-}
 
 function refreshPage(){
-    window.location.reload();
-} 
-createGrid();
+    numberOfRows = Number(prompt('How many rows?'))
+    if (numberOfRows <= 100) {
+        let cells = document.querySelectorAll(".cell")
+        cells.forEach(cell => cell.remove());
+        createGrid(numberOfRows)
+    } else {
+        alert('Grid Size cannot exceed 100!')
+    }
+}
 
+function changeToBlack(e) {
+    e.target.style.background = 'black'
+}
+
+function changeToGold(e) {
+    e.target.style.background = 'rgb(189, 142, 12)';
+}
+
+function changeToRandom(e) {
+    e.target.style.background = "random"
+}
+
+
+
+function setColor(color){
+    colorNow = color;
+    let cells = document.querySelectorall(".cell")
+    createGrid(numberOfRows);
+    cells.forEach(cell => cell.remove());
+}
+
+function drawColor(e){
+
+    if (colorNow === 'black'){
+        changeToBlack(e)
+    }
+    else if (colorNow === 'rgb(189, 142, 12)'){
+        changeToGold(e)
+    }
+    else if (colorNow === 'random'){
+        changeToRandom(e)
+    }
+}
