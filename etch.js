@@ -1,36 +1,37 @@
-const boxContainer = document.querySelector(".boxContainer")
+const grid = document.querySelector(".grid")
 let colorNow = 'black'
-let numberOfRows = 16;
+let defaultSize = 16;
 
-//Grid
+//Creates the default grid
 
-  function createGrid(numberOfRows) {
-    boxContainer.style.setProperty('--grid-rows', numberOfRows);
-    boxContainer.style.setProperty('--grid-cols', numberOfRows);
-    for (let i = 0; i < (numberOfRows ** 2); i++) {
-        let cell = document.createElement('div');
-        cell.setAttribute("class", "cell");
-        cell.setAttribute("id", `${i}`);
-        cell.addEventListener('mouseover', drawColor);
-        boxContainer.appendChild(cell);
+    function createGrid(defaultSize) {
+        grid.style.gridTemplateColumns = `repeat(${defaultSize}, 1fr)`
+        grid.style.gridTemplateRows = `repeat(${defaultSize}, 1fr)`
+        for (let i = 0; i < (defaultSize * defaultSize); i++) {
+            const cell = document.createElement('div');
+            cell.setAttribute("class", "cell");
+            cell.setAttribute("id", `${i}`);
+            cell.addEventListener('mouseover', drawColor);
+            grid.appendChild(cell)
+        }
     }
-}
-createGrid(numberOfRows)
+createGrid(defaultSize);
 
 
-//Hover over cells plus button changes
+//Refresh Page and resize prompt
 
 function refreshPage(){
-    numberOfRows = Number(prompt('How many rows?'))
-    if (numberOfRows <= 100) {
+    defaultSize = Number(prompt('How many rows? Cannot exceed 100.'))
+    if (defaultSize <= 100) {
         let cells = document.querySelectorAll(".cell")
         cells.forEach(cell => cell.remove());
-        createGrid(numberOfRows)
+        createGrid(defaultSize)
     } else {
         alert('Grid Size cannot exceed 100!')
     }
 }
 
+//Changes currently toggled color when pressed
 function changeToBlack(e) {
     e.target.style.background = 'black'
 }
@@ -39,17 +40,22 @@ function changeToGold(e) {
     e.target.style.background = 'rgb(189, 142, 12)';
 }
 
-function changeToRandom(e) {
-    e.target.style.background = "random"
+function changeToRandom(e){
+    e.target.style.background = randomColor();
+}
+//Creates a random color
+function randomColor() {
+    var num = Math.round(0xffffff * Math.random());
+    var r = num >> 16;
+    var g = num >> 8 & 255;
+    var b = num & 255;
+    return 'rgb(' + r + ', ' + g + ', ' + b + ')';
+
 }
 
-
-
+//Stores the currently selected color group
 function setColor(color){
     colorNow = color;
-    let cells = document.querySelectorall(".cell")
-    createGrid(numberOfRows);
-    cells.forEach(cell => cell.remove());
 }
 
 function drawColor(e){
@@ -61,6 +67,7 @@ function drawColor(e){
         changeToGold(e)
     }
     else if (colorNow === 'random'){
-        changeToRandom(e)
+        changeToRandom(e);
     }
 }
+
